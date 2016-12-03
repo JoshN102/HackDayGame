@@ -1,0 +1,26 @@
+git init
+
+
+git clone
+for cloning the repository from website
+
+git add [.]
+. is to add all
+adds the file to staged ready to be committed
+
+git commit -m "message"
+commits the file to your local repository
+
+git push origin master
+updates the repository
+
+git checkout -b json
+creates a new branch and switches you into it
+would use git push origin json to push it to a branch and not to master
+
+git branch [master]
+creates a branch [master]
+
+git checkout
+checks out all files into another branch
+
