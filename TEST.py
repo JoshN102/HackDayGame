@@ -21,6 +21,7 @@ while isRunning == True:
                 isRunning = False
         if event.type == pygame.MOUSEBUTTONUP:
             square.clear()
+#            pygame.display.flip()
 
 pygame.quit()
 quit()
