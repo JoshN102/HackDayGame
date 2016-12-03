@@ -10,7 +10,6 @@ while isRunning == True:
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.display.quit()
             isRunning = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             (x,y) = pygame.mouse.get_pos()
@@ -18,7 +17,11 @@ while isRunning == True:
             pygame.draw.rect(screen,(0,128,255),rect)
             pygame.display.flip()
             clock.tick(30)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                isRunning = False
         if event.type == pygame.MOUSEBUTTONUP:
             screen.fill((0,0,0))
 
-                
+pygame.quit()
+quit()
