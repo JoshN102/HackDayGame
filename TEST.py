@@ -1,8 +1,9 @@
 import pygame
+import square
 
 pygame.init()
 screen = pygame.display.set_mode((800,500))
-
+square = square.square(screen)
 clock = pygame.time.Clock()
 isRunning = True
 
@@ -13,15 +14,13 @@ while isRunning == True:
             isRunning = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             (x,y) = pygame.mouse.get_pos()
-            rect = pygame.rect = (x,y,100,100)
-            pygame.draw.rect(screen,(0,128,255),rect)
-            pygame.display.flip()
+            square.draw(x,y)
             clock.tick(30)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 isRunning = False
         if event.type == pygame.MOUSEBUTTONUP:
-            screen.fill((0,0,0))
+            square.clear()
 
 pygame.quit()
 quit()
