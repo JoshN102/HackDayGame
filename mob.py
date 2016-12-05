@@ -1,18 +1,32 @@
 import pygame
+import random
 
-class mob:
+class mob(pygame.sprite.Sprite):
     
-    def __init__(self,name,health):
-        self.name = name
+    def __init__(self,origin,speed,health):
+        (self.x,self.y) = origin
+        self.speed = speed
         self.health = health
+        super(mob,self).__init__()
+        self.surf = pygame.Surface((25,25))
+        self.rect = self.surf.get_rect(center=(self.x,self.y))
         
-    def draw(self,x,y,screen):
-        #Temporary mobs until I implement sprites
-        pygame.draw.circle(screen,(0,128,255),(x,y),5)
+    def move(self,direction):
+        if direction == "right":
+            self.x += self.speed
+            self.rect = self.surf.get_rect(center=(self.x,self.y))
+        elif direction == "left":
+            self.x -= self.speed
+            self.rect = self.surf.get_rect(center=(self.x,self.y))
+        elif direction == "up":
+            self.y -= self.speed
+            self.rect = self.surf.get_rect(center=(self.x,self.y))
+        else:
+            self.y += self.speed
+            self.rect = self.surf.get_rect(center=(self.x,self.y))
         
-    def clear(self):
-        #Temp until sprites
-        pygame.display.fill((0,0,0))
+    def get_XY(self):
+        return (self.x,self.y)
         
     def check_health(self):
         if self.health <= 0:
@@ -20,39 +34,24 @@ class mob:
         else:
             pass
         
-    def move(self,x,y):
-        pass
-    
-class player:
-    
-    def __init__(self,origin,speed):
-        (self.x,self.y) = origin
-        self.speed = speed
+    def draw(self,screen,colour):
+        self.surf.fill(colour)
+        screen.blit(self.surf,(self.x,self.y))
         
-    def move(self,direction):
-        #direction is "right","left","up" or "down"
-        if direction == "right":
-            self.x += self.speed
-        elif direction == "left":
-            self.x -= self.speed
-        elif direction == "up":
-            self.y -= self.speed
+class player(mob):
+    pass
+    
+class enemy(mob):
+    
+    def path(self):
+        direction = random.randint(1,60)
+        if direction == 1:
+            self.move("right")
+        elif direction == 2:
+            self.move("down")
+        elif direction == 3:
+            self.move("left")
+        elif direction == 4:
+            self.move("up")
         else:
-            self.y += self.speed
-            
-    def draw(self,screen):
-        #temp
-        pygame.draw.circle(screen,(0,128,255),(self.x,self.y),20)
-        
-    def get_XY(self):
-        return (self.x,self.y)
-        
-    
-    
-    
-        
-        
-        
-        
-        
-        
+            pass
