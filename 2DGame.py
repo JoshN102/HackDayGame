@@ -12,9 +12,14 @@ def main():
     enemy = mob.enemy((HEIGHT/2,WIDTH/2),3,10)
     screen = pygame.display.set_mode((HEIGHT,WIDTH))
     
+    all_entities = pygame.sprite.Group()
+    enemies = pygame.sprite.Group()
+    all_entities.add(player)
     bullets = []
+    ADDENEMY = pygame.USEREVENT+1
 
-    isEnemy = True
+    pygame.time.set_timer(ADDENEMY,2500)
+
     isRunning = True
     
     while isRunning:
@@ -27,15 +32,20 @@ def main():
                 pygame.quit()
                 isRunning = False
             #key input
-            if event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     isRunning = False
 
             #mouse input
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 target = pygame.mouse.get_pos()
                 bullets.append(bullet.bullet(player.get_XY(),3,target))
+                
+            elif event.type == ADDENEMY:
+                yEnemy = random.randint(1,HEIGHT)
+                xEnemy = random.randint(1,WIDTH)
+                enemies.add(mob.enemy((yEnemy,xEnemy),3,10))
                 
         key = pygame.key.get_pressed()
         if key[pygame.K_d]: player.move("right")
@@ -48,7 +58,7 @@ def main():
         surf.fill((150,0,50))
         screen.blit(surf, (0,0))
         player.draw(screen,(0,128,255))
-        if isEnemy: 
+        for enemy in enemies: 
             enemy.draw(screen,(0,255,0))
             enemy.path()
         for aBullet in bullets:
@@ -57,16 +67,14 @@ def main():
             else:
                 aBullet.draw(screen)
                 aBullet.move()
-                if pygame.sprite.collide_rect(enemy,aBullet):
-                    yEnemy = random.randint(1,HEIGHT)
-                    xEnemy = random.randint(1,WIDTH)
-                    enemy = mob.enemy((yEnemy,xEnemy),3,10)
-
+            for enemy in enemies:
+                if pygame.sprite.collide_rect(aBullet,enemy):
+                    enemy.kill()
+                        
         #display
         pygame.display.flip()
         
         #Framess
         clock.tick(30)
-        
         
 main()

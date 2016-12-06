@@ -4,12 +4,13 @@ import random
 class mob(pygame.sprite.Sprite):
     
     def __init__(self,origin,speed,health):
+        LENGTH = 25
         (self.x,self.y) = origin
         self.speed = speed
         self.health = health
         super(mob,self).__init__()
-        self.surf = pygame.Surface((25,25))
-        self.rect = self.surf.get_rect(center=(self.x,self.y))
+        self.surf = pygame.Surface((LENGTH,LENGTH))
+        self.rect = self.surf.get_rect(center=(self.x-LENGTH/2,self.y-LENGTH/2))
         
     def move(self,direction):
         if direction == "right":

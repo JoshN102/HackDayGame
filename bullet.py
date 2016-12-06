@@ -4,13 +4,14 @@ import math
 class bullet(pygame.sprite.Sprite):
     
     def __init__(self,origin,speed,target):
+        LENGTH = 3
         [self.x,self.y] = origin
         self.origin = origin
         self.spd = speed
         self.target = target
-        self.surf = pygame.Surface((3,3))
-        self.surf.fill((200,200,200))
-        self.rect = self.surf.get_rect(center=(self.x,self.y))
+        self.surf = pygame.Surface((LENGTH,LENGTH))
+        self.surf.fill((100,100,200))
+        self.rect = self.surf.get_rect(center=(self.x-LENGTH/2,self.y-LENGTH/2))
         
     def move(self):
         (xTarget,yTarget) = self.target
